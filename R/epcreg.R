@@ -12,7 +12,9 @@ epcreg.set.filemethod <- function(formula, data, instance.list, type="regression
 epcreg <- function(formula, data
   , baselearner.control=epcreg.baselearner.control()
   , integrator.control=epcreg.integrator.control()
-  , ncores=1, filemethod=FALSE, print.level=1) {
+  , ncores=1, filemethod=FALSE, print.level=1
+  , preschedule = FALSE
+  , schedule.method = c("random", "as.is", "task.length"), task.length) {
   if (integrator.control$method!="default") stop("invalid PCR integration method")
   ncores.max <- try(detectCores(),silent=T)
   mycall <- match.call()
@@ -27,7 +29,7 @@ epcreg <- function(formula, data
   if (missing(filemethod)) filemethod <- epcreg.set.filemethod(formula, data, my.instance.list)
   
   if (print.level>=1) cat("CV training of base learners...\n")
-  est.baselearner.cv.batch <- Regression.CV.Batch.Fit(my.instance.list, formula, data, ncores=ncores, filemethod=filemethod, print.level=print.level)
+  est.baselearner.cv.batch <- Regression.CV.Batch.Fit(my.instance.list, formula, data, ncores=ncores, filemethod=filemethod, print.level=print.level, preschedule = preschedule, schedule.method = schedule.method, task.length = task.length)
   if (print.level>=1) cat("finished CV training of base learners\n")
   Xcv <- est.baselearner.cv.batch@pred
   y <- data[,all.vars(formula)[1]] # TODO: more robust way of extracting y (here and inside base learner functions)
@@ -45,10 +47,10 @@ epcreg <- function(formula, data
   return (ret)
 }
 
-predict.epcreg <- function(object, newdata=NULL, ncores=1, ...) {
+predict.epcreg <- function(object, newdata=NULL, ncores=1, preschedule = TRUE, ...) {
   if (is.null(newdata)) return (object$pred)
   if (object$method=="default") {
-    newpred.baselearner.cv.batch <- predict(object$est$baselearner.cv.batch, newdata, ncores=ncores, ...)
+    newpred.baselearner.cv.batch <- predict(object$est$baselearner.cv.batch, newdata, ncores=ncores, preschedule = preschedule, ...)
     newpred <- predict(object$est$integrator, Xnew=newpred.baselearner.cv.batch, config.list=object$est$baselearner.batch@config.list, ...)
   } else {
     stop("invalid PCR integration method")
@@ -60,7 +62,7 @@ plot.epcreg <- function(x, ...) {
   errfun <- x$integrator.config@errfun 
   error <- errfun(x$pred, x$y)
   oldpar <- par(mfrow=c(1,2))
-  plot(x$est$baselearner.cv.batch, errfun=errfun)
+  plot(x$est$baselearner.cv.batch, errfun=errfun, ylim.adj = error)
   abline(h=error, lty=2)
   pcr.errors <- x$est$integrator@est$select@est$error
   #pcr.pred <- x$est$integrator@est$pcr@pred
@@ -144,7 +146,9 @@ summary.epcreg <- function(object, ...) {
   maxpc <- object$est$integrator@est$pcr@sweep.list[[1]]@config@n
   index.min <- object$est$integrator@est$select@est$index.min
   error.min <- object$est$integrator@est$select@est$error.min
-  ret <- list(n.instance=n.instance, maxpc=maxpc, index.min=index.min, error.min=error.min)
+  tvec <- object$est$baselearner.cv.batch@tvec
+  
+  ret <- list(n.instance=n.instance, maxpc=maxpc, index.min=index.min, error.min=error.min, tvec = tvec)
   
   class(ret) <- "summary.epcreg"
   return (ret)

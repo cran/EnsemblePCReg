@@ -37,8 +37,12 @@ perc.train <- 0.7
 index.train <- sample(1:nrow(servo), size = round(perc.train*nrow(servo)))
 data.train <- servo[index.train,]
 data.predict <- servo[-index.train,]
-est <- epcreg(myformula, data.train, ncores=2, filemethod=TRUE
-  , baselearner.control=epcreg.baselearner.control(baselearners="knn"))
+est <- epcreg(myformula, data.train, ncores=2
+  , baselearner.control=epcreg.baselearner.control(
+    baselearners="knn"
+    , baselearner.configs = make.configs("knn"
+      , config.df = expand.grid(kernel = "rectangular"
+        , k = c(5, 10)))), filemethod = TRUE)
 epcreg.save(est, "somefile")
 rm(est) # alternatively, exit and re-launch R session
 est.loaded <- epcreg.load("somefile")

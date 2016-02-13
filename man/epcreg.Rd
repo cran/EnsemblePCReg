@@ -12,6 +12,9 @@ epcreg(formula, data
   , baselearner.control=epcreg.baselearner.control()
   , integrator.control=epcreg.integrator.control()
   , ncores=1, filemethod=FALSE, print.level=1
+  , preschedule = FALSE
+  , schedule.method = c("random", "as.is", "task.length")
+  , task.length
 )
 }
 %- maybe also 'usage' for other objects documented here.
@@ -23,6 +26,9 @@ epcreg(formula, data
   \item{ncores}{Number of cores used for parallel training of base learners.}
   \item{filemethod}{Boolean flag indicating whether or not to save estimation objects to disk or not. Using \code{filemethod=T} reduces RAM pressure.}
   \item{print.level}{Controlling verbosity level.}
+  \item{preschedule}{Boolean flag, indicating whether base learner training jobs must be scheduled statically (\code{TRUE}) or dynamically (\code{FALSE}).}
+  \item{schedule.method}{Method used for scheduling tasks on threads. In "as.is" tasks are assigned to threads in a round-robin fashion for static scheduling. In dynamic scheduling, tasks form a queue without any re-ordering. In "random", tasks are first randomly shuffled, and the rest is similar to "as.is". In "task.length", a heuristic algorithm is used in static scheduling for assigning tasks to threads to minimize load imbalance, i.e. make total task lengths in threads roughly equal. In dynamic scheduling, tasks are sorted in descending order of expected length to form the task queue.}
+  \item{task.length}{Vector of estimated task lengths, to be used in the "task.length" method of scheduling.}
 }
 
 \value{
@@ -55,6 +61,10 @@ data.predict <- servo[-index.train,]
 ## to run longer test using all 5 default regression base learners
 ## try: est <- epcreg(myformula, data.train, ncores=2)
 est <- epcreg(myformula, data.train, ncores=2
-  , baselearner.control=epcreg.baselearner.control(baselearners="knn"))
+  , baselearner.control=epcreg.baselearner.control(
+    baselearners="knn"
+    , baselearner.configs = make.configs("knn"
+      , config.df = expand.grid(kernel = "rectangular"
+        , k = c(5, 10)))))
 newpred <- predict(est, data.predict)
 }

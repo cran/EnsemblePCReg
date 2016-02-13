@@ -1,0 +1,6 @@
+%\VignetteIndexEntry{EnsemblePCReg: An R package for fully-automated ensemble learning with reproducible prediction using Principal Components Regression}
+%\VignetteEngine{R.rsp::asis}
+%\VignetteKeyword{heterogeneous ensemble learning}
+%\VignetteKeyword{ensemble meta-learning}
+%\VignetteKeyword{stacked generalization}
+%\VignetteKeyword{principal components regression}
