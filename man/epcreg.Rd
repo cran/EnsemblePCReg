@@ -1,4 +1,4 @@
-\name{ecpreg}
+\name{epcreg}
 \alias{epcreg}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
@@ -12,7 +12,7 @@ epcreg(formula, data
   , baselearner.control=epcreg.baselearner.control()
   , integrator.control=epcreg.integrator.control()
   , ncores=1, filemethod=FALSE, print.level=1
-  , preschedule = FALSE
+  , preschedule = TRUE
   , schedule.method = c("random", "as.is", "task.length")
   , task.length
 )

@@ -6,7 +6,7 @@
 Custom Functions for Disk I/O in \pkg{EnsemblePCReg} Package
 }
 \description{
-These functions must be used in conjunction with \code{filemethod=TRUE} flag during the \code{epcreg} call.
+These functions can be used whether \code{filemethod} flag is set to \code{TRUE} or \code{FALSE} during the \code{epcreg} call. Note that \code{epcreg.load} `returns' the estimation object (in contrast to the standard \code{load} method).
 }
 \usage{
 epcreg.save(obj, file)

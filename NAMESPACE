@@ -4,7 +4,8 @@ importFrom("graphics", "abline", "par", "plot")
 importFrom("stats", "prcomp", "predict")
 importFrom("utils", "tar", "untar")
   
-importFrom(methods,setClass,setMethod,new)
+#importFrom(methods,setClass,setMethod,new)
+import(methods)
 import(EnsembleBase)
 importFrom(parallel, detectCores)
 
@@ -22,6 +23,7 @@ S3method(plot, epcreg)
 
 # integrator.R
 export(Regression.Sweep.CV.Fit)
+#exportMethods(Regression.Sweep.Fit)
 S3method(predict, Regression.Sweep.CV.FitObj)
 exportClasses(Regression.Sweep.PCR.Config
   , Regression.Sweep.PCR.FitObj
