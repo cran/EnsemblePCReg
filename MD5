@@ -1,5 +1,5 @@
-392b28d53d6837b8f5be440bdf768e8d *ChangeLog
-f10855e6a6b856d1c446364db7253009 *DESCRIPTION
+8029d9e69b887f95f114c71dac191d9a *ChangeLog
+ae38aa93f90f0f9ea12430a3381c91d1 *DESCRIPTION
 709e2b2fe43f3d11b8aa09c2387d307a *NAMESPACE
 70d429e55bb295f1466df02808cc2c4e *R/aaa.R
 9035b31dbd3ae93e4a47da272bfbd0fc *R/epcreg.R
@@ -16,7 +16,7 @@ f91223f0bcdaef6dfec595557e64d367 *man/Regression.Sweep.PCR.Config-class.Rd
 edbe9896c89edfe04f8d792239712c82 *man/Regression.Sweep.PCR.FitObj-class.Rd
 9f9821549b3753f38a1d992a2d6c8869 *man/epcreg.Rd
 e0b52b7f10c84a86b25bb3050bed68b0 *man/epcreg.baselearner.control.Rd
-9a83ab1991bb19663751544dab818d70 *man/epcreg.save.Rd
+5f94a958405a15d5511ea36592cb31f8 *man/epcreg.save.Rd
 ca47f1fdf1ebc41d538405ed43e6231c *man/plot.epcreg.Rd
 75893819f64a7e73288b921e29c4990e *man/predict.epcreg.Rd
 1280a544a275b3b1b15cceba6aaff830 *man/summary.epcreg.Rd

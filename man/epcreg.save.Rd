@@ -14,12 +14,12 @@ epcreg.load(file)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{obj}{Object of classes \code{"\link{epcreg}"} and \code{"epcreg.file"}, usually the output of call to function \code{epcreg} with \code{filemethod} flag set to \code{TRUE}.}
+  \item{obj}{Object of classes \code{"\link{epcreg}"} (and possibly \code{"epcreg.file"}), typically the output of call to function \code{epcreg}.}
   \item{file}{Filepath to where \code{obj} must be saved to / loaded from.}
 }
 
 \value{
-Function \code{epcreg.load} returns the saved \code{obj}, with estimation files automatically copied to R temporary directory, and filepaths inside the \code{obj} fields updated to point to these new filepaths.
+Function \code{epcreg.load} returns the saved \code{obj}, with estimation files automatically copied to R temporary directory, and filepaths inside the \code{obj} fields updated to point to these new filepaths (if \code{filemethod} was set to \code{TRUE} in the call to \code{epcreg}).
 }
 
 \author{
