@@ -1,3 +1,12 @@
+Changes in 1.1.4
+  * Fixed another minor error (NOTE, to be precise) flagged in CRAN checks.
+
+Changes in 1.1.3
+  * Modified method for checking the class of an object to use inherits, per feedback from CRAN checks.
+
+  Changes in 1.1.2
+  * Fixed the bug reported by CRAN for some windows test servers, where during loading trained object and when listing the files in the compressed file the directory itself is listed.
+
 Changes in 1.1.1
   * Changed maintainer email address.
   * Minor edits to documentation files.

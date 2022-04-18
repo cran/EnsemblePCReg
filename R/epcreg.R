@@ -101,8 +101,13 @@ epcreg.load <- function (file) {
   #load(file, envir = env)
   loadret <- suppressWarnings(try(load(file, envir = env), silent = TRUE))
   
-  if (class(loadret) == "try-error") { # filemethod load
+  #if (class(loadret) == "try-error") { # filemethod load
+  if (inherits(loadret, "try-error")) { # filemethod load
     filepaths <- untar(file, list = T)
+    
+    is_dir_vec <- unname(sapply(filepaths, endsWith, suffix = "/"))
+    filepaths <- filepaths[!is_dir_vec]
+    
     basenames <- basename(filepaths)
     dirnames <- dirname(filepaths)
     if (length(unique(dirnames)) > 1) 

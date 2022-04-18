@@ -47,5 +47,6 @@ epcreg.save(est, "somefile")
 rm(est) # alternatively, exit and re-launch R session
 est.loaded <- epcreg.load("somefile")
 newpred <- predict(est.loaded, data.predict)
+file.remove("somefile")
 }
 
